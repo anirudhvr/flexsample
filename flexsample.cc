@@ -124,19 +124,12 @@ bool FlexSample::go() {
     float random_float;
     unsigned int samplingclass_index;
 
-#if 0
-    unsigned int botnetpackets = 0;
-#endif
 
     cerr << "file open" << endl;
     string line;
     // Read first line to get field annotations
     infile >> line;
     chomp (line);
-
-#if 0
-    bool skip = true;
-#endif
 
     /* Construct a struct that will allow easy 
      * dereferencing of field names
@@ -156,11 +149,6 @@ bool FlexSample::go() {
       chomp (line);
       split (line, delim, fields);
 
-#if 0
-      if (fields[fn["time"]] == "1209761640") 
-        skip = false;
-      if (skip) continue;
-#endif
 
       /*
        * FIXME
@@ -183,10 +171,6 @@ bool FlexSample::go() {
 
         cerr << "rotating all cbfs at " << fields[fn["time"]] 
           << ", packets seen = " << packetcount << endl;
-#if 0
-          cerr << "botnet packets: " << botnetpackets << endl;
-          botnetpackets = 0;
-#endif
 
         for (i = 0; i < _fractions->size(); ++i) {
 
@@ -224,19 +208,6 @@ bool FlexSample::go() {
       /* 
        * Not yet time to rotate. Do normal stuff 
        */
-
-      /*
-      cout << "variable defitions: ";
-      copy (_sblt.variable_definitions[0].begin(), 
-          _sblt.variable_definitions[0].end(), 
-          ostream_iterator<string>(cout, " "));
-      cout << endl << "fields: " ;
-      copy (fields.begin(), 
-          fields.end(), 
-          ostream_iterator<string>(cout, " "));
-      cout << endl;
-      */
-
 
       /* assert all the requested variable definitions
        * exist in the input file that was provided */
@@ -288,31 +259,6 @@ bool FlexSample::go() {
        * sampled at */
       inst_sampling_prob = 
         _probabilities->get_value_raw (samplingclass_index);
-
-#if 0
-      if (fields[fn["srcip"]] == "143.215.129.45" && 
-          fields[fn["dstip"]].find("206.197.119.") == 0) { 
-        // portscan packet 
-        cerr << "sampling portscan packet at prob: " << inst_sampling_prob
-          << " in class " << samplingclass_index; 
-        cerr << ". counts: var_1: " << varcounts[0] << ", var_2: " 
-          << varcounts[1] << endl;
-      }
-#endif
-
-#if 0
-      /* if (fields[fn["dstip"]] == "143.215.15.107") */ 
-      if (fields[fn["tcpflags"]] == "B") {
-        // botnet packet 
-        cerr << "sampling botnet packet at prob: " << inst_sampling_prob
-          << " in class " << samplingclass_index; 
-        cerr << ". counts: ";
-        for (unsigned int j = 0; j < _sblt._num_vars; ++j)
-          cerr << "var_" << j+1 << ": " << varcounts[j] << ", ";
-        cerr << endl;
-        ++botnetpackets;
-      }
-#endif
 
 
       /* generate random value, and sample 
