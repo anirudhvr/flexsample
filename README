@@ -1,0 +1,47 @@
+This is the flexsample distribution described in the paper 
+
+Fast Monitoring for Traffic Subpopulations
+Anirudh Ramachandran, Srinivasan Seetharaman, Nick Feamster and Vijay
+Vazirani
+Internet Measurement Conference 2008
+
+
+Sources:
+
+- driver.cc -- Runs the main program by instantiating a FlexSample
+  object
+- flexsample.cc -- Creates a Flexsample object that reads a file
+  containing packet attributes, one per line, and performs sampling
+  according to the configurations specified
+- the confs/ directory: contains configuration files for different kinds
+  of sampling, such as for DDoS, portscan, etc (see paper)
+- conditions.cc -- implements config parsing 
+- sblookuptable.cc -- implements the sampling budget lookup table
+  (described in the paper)
+- cbf.cc --- implements a counting bloom filter array (as in the paper)
+
+
+How to use it for your own traces.
+
+The input data files are in a form like this:
+
+srcip|srcport|dstip|dstport|prot|flowsizepkts|flowsizebytes
+143.215.129.26|34234|222.165.99.143|59323|17|1|30
+143.215.15.171|80|203.87.87.218|1868|6|1|40
+143.215.129.26|34014|82.32.82.176|22312|17|1|30
+143.215.130.27|53|207.58.180.57|47401|17|1|133
+143.215.143.4|53|217.107.222.76|33504|17|1|108
+143.215.143.4|53|202.108.33.44|14883|17|12|1525
+200.57.214.10|2204|143.215.15.199|447|17|1|102
+190.188.132.9|3692|143.215.15.199|447|17|1|103
+
+The first line specifies what the fields are, and you use the same field
+name specifications (e..g, "flowsizepkts") in your config file.
+Flexsample will pick out the appropriate field from the data file and
+construct various tuples correctly. Look through some of the configs in
+the confs/ directory to get an idea of how the tuples and conditions are
+specified. 
+
+
+
+
