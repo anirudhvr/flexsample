@@ -35,6 +35,9 @@ class CountingBloomFilter {
     CountingBloomFilter(unsigned long num_elements, 
         float error_rate) ;
 
+    /* FIXME
+       Define Copy constructor and assignment operator! 
+     */
 
     ~CountingBloomFilter() {
       if (_filter) 

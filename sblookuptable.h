@@ -113,6 +113,10 @@ class SamplingBudgetLookupTable {
     SamplingBudgetLookupTable (unsigned int num_vars, 
         unsigned int num_conditions); 
 
+    /* FIXME
+       Define Copy constructor and assignment operator! 
+     */
+
     ~SamplingBudgetLookupTable ();
 
     bool add_range (unsigned int varnum, 
